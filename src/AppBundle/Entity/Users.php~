@@ -1,0 +1,262 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="users")
+ */
+class Users
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    protected $password;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $first_name;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $last_name;
+
+//    /**
+//     * @ORM\OneToMany(targetEntity="Cards", mappedBy="users")
+//     **/
+//    private $user_cards;
+//
+//    /**
+//     * @ORM\OneToMany(targetEntity="Connections", mappedBy="users")
+//     **/
+//    private $senders;
+//
+//    /**
+//     * @ORM\OneToMany(targetEntity="Connections", mappedBy="users")
+//     **/
+//    private $recipients;
+//
+//    public function __construct()
+//    {
+//        $this->user_cards = new ArrayCollection();
+//        $this->senders = new ArrayCollection();
+//        $this->recipients = new ArrayCollection();
+//    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Users
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Users
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set first_name
+     *
+     * @param string $firstName
+     * @return Users
+     */
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get first_name
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Set last_name
+     *
+     * @param string $lastName
+     * @return Users
+     */
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get last_name
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * Add user_cards
+     *
+     * @param \AppBundle\Entity\Cards $userCards
+     * @return Users
+     */
+    public function addUserCard(\AppBundle\Entity\Cards $userCards)
+    {
+        $this->user_cards[] = $userCards;
+
+        return $this;
+    }
+
+    /**
+     * Remove user_cards
+     *
+     * @param \AppBundle\Entity\Cards $userCards
+     */
+    public function removeUserCard(\AppBundle\Entity\Cards $userCards)
+    {
+        $this->user_cards->removeElement($userCards);
+    }
+
+    /**
+     * Get user_cards
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserCards()
+    {
+        return $this->user_cards;
+    }
+
+    /**
+     * Add senders
+     *
+     * @param \AppBundle\Entity\Connections $senders
+     * @return Users
+     */
+    public function addSender(\AppBundle\Entity\Connections $senders)
+    {
+        $this->senders[] = $senders;
+
+        return $this;
+    }
+
+    /**
+     * Remove senders
+     *
+     * @param \AppBundle\Entity\Connections $senders
+     */
+    public function removeSender(\AppBundle\Entity\Connections $senders)
+    {
+        $this->senders->removeElement($senders);
+    }
+
+    /**
+     * Get senders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSenders()
+    {
+        return $this->senders;
+    }
+
+    /**
+     * Add recipients
+     *
+     * @param \AppBundle\Entity\Connections $recipients
+     * @return Users
+     */
+    public function addRecipient(\AppBundle\Entity\Connections $recipients)
+    {
+        $this->recipients[] = $recipients;
+
+        return $this;
+    }
+
+    /**
+     * Remove recipients
+     *
+     * @param \AppBundle\Entity\Connections $recipients
+     */
+    public function removeRecipient(\AppBundle\Entity\Connections $recipients)
+    {
+        $this->recipients->removeElement($recipients);
+    }
+
+    /**
+     * Get recipients
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+}

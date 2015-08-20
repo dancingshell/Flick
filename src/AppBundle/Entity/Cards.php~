@@ -1,0 +1,110 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="cards")
+ */
+class Cards
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users", inversedBy="cards")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Categories", inversedBy="cards")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category_id;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $email;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $company_name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $street1;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $street2;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $zipcode;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $phone_mobile;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $phone_business;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $phone_fax;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $phone_home;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $website;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $facebook;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $twitter;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $logo;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{#<label></label>#}
+{#<input type="text">#}
+{#{% for number in numbers %}#}
+    {#number is: {{ number }}#}
+{#{% endfor %}#}
+{#{% block body %}{% endblock %}#}
+{#{% block javascripts %}{% endblock %}#}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+</body>
+</html>
