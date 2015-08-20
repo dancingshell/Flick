@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Users;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +18,8 @@ class UserController extends Controller
 
         if ($email && $password && $firstName && $lastName) {
             //check if email already exists
-            if(!$this->getDoctrine()->getRepository('AppBundle:Users')->findOneBy(['email' => $email])) {
-                $user = new Users();
+            if(!$this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['email' => $email])) {
+                $user = new User();
                 $user->setEmail($email);
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function getAction($id) {
         $user = $this->getDoctrine()
-            ->getRepository('AppBundle:Users')
+            ->getRepository('AppBundle:User')
             ->find($id);
 
         if (!$user) {

@@ -2,46 +2,50 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Entity\Cards;
+use AppBundle\Entity\Card;
 
 class CardController extends Controller
 {
     public function createAction(Request $request)
     {
-        $card = new Cards;
-        $request->get('test');
-        // create a task and give it some dummy data for this example
-        $card->setCity('Write a blog post');
-        $card->setEmail('poop');
+        //get mandatory parameters
+        $userId = $request->get('owner');
+        $categoryId = $request->get('category');
 
-        $form = $this->createFormBuilder($card)
-            ->add('city', 'text')
-            ->add('email', 'text')
-            ->add('save', 'submit', array('label' => 'Create Card'))
-            ->getForm();
+        if ($userId && $categoryId) {
+            $em = $this->getDoctrine()->getManager();
+            $card = new Card();
+            $card->setUserId($em->getRepository('AppBundle:User')->findOneBy(array('id' => $userId)));
+            $card->setCategoryId($em->getRepository('AppBundle:Category')->findOneBy(array('id' => $categoryId)));
+
+            //get and set optional parameters
+            $card->setEmail($request->get('email'));
+            $card->setCompanyName($request->get('company'));
+            $card->setStreet1($request->get('street1'));
+            $card->setStreet2($request->get('street2'));
+            $card->setCity($request->get('city'));
+            $card->setState($request->get('state'));
+            $card->setCountry($request->get('country'));
+            $card->setPhoneMobile($request->get('mobile'));
+            $card->setPhoneBusiness($request->get('business'));
+            $card->setPhoneFax($request->get('fax'));
+            $card->setPhoneHome($request->get('home'));
+            $card->setWebsite($request->get('website'));
+            $card->setFacebook($request->get('facebook'));
+            $card->setTwitter($request->get('twitter'));
+            $card->setLogo($request->get('logo'));
 
 
-        $form->handleRequest($request);
+            $em->persist($card);
+            $em->flush();
+            $newId = $card->getId();
 
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($form->getViewData());
-
-            return $this->redirectToRoute('/');
+            return new Response('created a card with id: ' . $newId);
         }
 
-        return $this->render('/');
-
-//        $card->setCity('Dubai');
-//        $this->getDoctrine()->getManager()->persist($card);
-//        $html = $this->container->get('templating')->render(
-//            'card/new.html.twig',
-//            array(
-//                'numbers' => [1,2,3],
-//                'categories' =>  $this->getDoctrine()->getRepository('AppBundle:Categories')->findAll()
-//            )
-//        );
-//        return new Response($html);
+        return new Response('missing parameters');
     }
 }

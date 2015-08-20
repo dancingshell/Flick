@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="users")
  */
-class Users implements \JsonSerializable
+class User implements \JsonSerializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -50,7 +50,7 @@ class Users implements \JsonSerializable
      * Set email
      *
      * @param string $email
-     * @return Users
+     * @return User
      */
     public function setEmail($email)
     {
@@ -73,7 +73,7 @@ class Users implements \JsonSerializable
      * Set password
      *
      * @param string $password
-     * @return Users
+     * @return User
      */
     public function setPassword($password)
     {
@@ -96,7 +96,7 @@ class Users implements \JsonSerializable
      * Set first_name
      *
      * @param string $firstName
-     * @return Users
+     * @return User
      */
     public function setFirstName($firstName)
     {
@@ -119,7 +119,7 @@ class Users implements \JsonSerializable
      * Set last_name
      *
      * @param string $lastName
-     * @return Users
+     * @return User
      */
     public function setLastName($lastName)
     {

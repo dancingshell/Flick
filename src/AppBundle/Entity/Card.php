@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="cards")
  */
-class Cards implements \JsonSerializable
+class Card implements \JsonSerializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -17,94 +17,94 @@ class Cards implements \JsonSerializable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users", inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="cards")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Categories", inversedBy="cards")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="cards")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category_id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $email;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $company_name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $street1;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $street2;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $city;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $state;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $zipcode;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $country;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone_mobile;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone_business;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone_fax;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone_home;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $website;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $facebook;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $twitter;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $logo;
 
@@ -122,7 +122,7 @@ class Cards implements \JsonSerializable
      * Set email
      *
      * @param string $email
-     * @return Cards
+     * @return Card
      */
     public function setEmail($email)
     {
@@ -145,7 +145,7 @@ class Cards implements \JsonSerializable
      * Set company_name
      *
      * @param string $companyName
-     * @return Cards
+     * @return Card
      */
     public function setCompanyName($companyName)
     {
@@ -168,7 +168,7 @@ class Cards implements \JsonSerializable
      * Set street1
      *
      * @param string $street1
-     * @return Cards
+     * @return Card
      */
     public function setStreet1($street1)
     {
@@ -191,7 +191,7 @@ class Cards implements \JsonSerializable
      * Set street2
      *
      * @param string $street2
-     * @return Cards
+     * @return Card
      */
     public function setStreet2($street2)
     {
@@ -214,7 +214,7 @@ class Cards implements \JsonSerializable
      * Set city
      *
      * @param string $city
-     * @return Cards
+     * @return Card
      */
     public function setCity($city)
     {
@@ -237,7 +237,7 @@ class Cards implements \JsonSerializable
      * Set state
      *
      * @param string $state
-     * @return Cards
+     * @return Card
      */
     public function setState($state)
     {
@@ -260,7 +260,7 @@ class Cards implements \JsonSerializable
      * Set zipcode
      *
      * @param string $zipcode
-     * @return Cards
+     * @return Card
      */
     public function setZipcode($zipcode)
     {
@@ -283,7 +283,7 @@ class Cards implements \JsonSerializable
      * Set country
      *
      * @param string $country
-     * @return Cards
+     * @return Card
      */
     public function setCountry($country)
     {
@@ -306,7 +306,7 @@ class Cards implements \JsonSerializable
      * Set phone_mobile
      *
      * @param string $phoneMobile
-     * @return Cards
+     * @return Card
      */
     public function setPhoneMobile($phoneMobile)
     {
@@ -329,7 +329,7 @@ class Cards implements \JsonSerializable
      * Set phone_business
      *
      * @param string $phoneBusiness
-     * @return Cards
+     * @return Card
      */
     public function setPhoneBusiness($phoneBusiness)
     {
@@ -352,7 +352,7 @@ class Cards implements \JsonSerializable
      * Set phone_fax
      *
      * @param string $phoneFax
-     * @return Cards
+     * @return Card
      */
     public function setPhoneFax($phoneFax)
     {
@@ -375,7 +375,7 @@ class Cards implements \JsonSerializable
      * Set phone_home
      *
      * @param string $phoneHome
-     * @return Cards
+     * @return Card
      */
     public function setPhoneHome($phoneHome)
     {
@@ -398,7 +398,7 @@ class Cards implements \JsonSerializable
      * Set website
      *
      * @param string $website
-     * @return Cards
+     * @return Card
      */
     public function setWebsite($website)
     {
@@ -421,7 +421,7 @@ class Cards implements \JsonSerializable
      * Set facebook
      *
      * @param string $facebook
-     * @return Cards
+     * @return Card
      */
     public function setFacebook($facebook)
     {
@@ -444,7 +444,7 @@ class Cards implements \JsonSerializable
      * Set twitter
      *
      * @param string $twitter
-     * @return Cards
+     * @return Card
      */
     public function setTwitter($twitter)
     {
@@ -467,7 +467,7 @@ class Cards implements \JsonSerializable
      * Set logo
      *
      * @param string $logo
-     * @return Cards
+     * @return Card
      */
     public function setLogo($logo)
     {
@@ -489,10 +489,10 @@ class Cards implements \JsonSerializable
     /**
      * Set user_id
      *
-     * @param \AppBundle\Entity\Users $userId
-     * @return Cards
+     * @param \AppBundle\Entity\User $userId
+     * @return Card
      */
-    public function setUserId(Users $userId = null)
+    public function setUserId(User $userId = null)
     {
         $this->user_id = $userId;
 
@@ -502,7 +502,7 @@ class Cards implements \JsonSerializable
     /**
      * Get user_id
      *
-     * @return \AppBundle\Entity\Users 
+     * @return \AppBundle\Entity\User
      */
     public function getUserId()
     {
@@ -512,10 +512,10 @@ class Cards implements \JsonSerializable
     /**
      * Set category_id
      *
-     * @param \AppBundle\Entity\Categories $categoryId
-     * @return Cards
+     * @param \AppBundle\Entity\Category $categoryId
+     * @return Card
      */
-    public function setCategoryId(Categories $categoryId = null)
+    public function setCategoryId(Category $categoryId = null)
     {
         $this->category_id = $categoryId;
 
@@ -525,7 +525,7 @@ class Cards implements \JsonSerializable
     /**
      * Get category_id
      *
-     * @return \AppBundle\Entity\Categories 
+     * @return \AppBundle\Entity\Category
      */
     public function getCategoryId()
     {

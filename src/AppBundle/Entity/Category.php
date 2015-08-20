@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="categories")
  */
-class Categories
+class Category
 {
     /**
      * @ORM\Column(type="integer")
@@ -40,7 +40,7 @@ class Categories
      * Set name
      *
      * @param string $name
-     * @return Categories
+     * @return Category
      */
     public function setName($name)
     {
@@ -63,7 +63,7 @@ class Categories
      * Set type
      *
      * @param string $type
-     * @return Categories
+     * @return Category
      */
     public function setType($type)
     {

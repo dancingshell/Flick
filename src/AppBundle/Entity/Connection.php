@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="connections")
  */
-class Connections
+class Connection
 {
     /**
      * @ORM\Column(type="integer")
@@ -17,16 +17,22 @@ class Connections
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users", inversedBy="connection")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="connection")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
      */
     protected $sender_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Users", inversedBy="connection")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="connection")
      * @ORM\JoinColumn(name="recipient_id", referencedColumnName="id")
      */
     protected $recipient_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Card", inversedBy="connection")
+     * @ORM\JoinColumn(name="card_id", referencedColumnName="id")
+     */
+    protected $card_id;
 
     /**
      * Get id
@@ -41,10 +47,10 @@ class Connections
     /**
      * Set sender_id
      *
-     * @param \AppBundle\Entity\Users $senderId
-     * @return Connections
+     * @param \AppBundle\Entity\User $senderId
+     * @return Connection
      */
-    public function setSenderId(\AppBundle\Entity\Users $senderId = null)
+    public function setSenderId(User $senderId = null)
     {
         $this->sender_id = $senderId;
 
@@ -54,7 +60,7 @@ class Connections
     /**
      * Get sender_id
      *
-     * @return \AppBundle\Entity\Users 
+     * @return \AppBundle\Entity\User
      */
     public function getSenderId()
     {
@@ -64,10 +70,10 @@ class Connections
     /**
      * Set recipient_id
      *
-     * @param \AppBundle\Entity\Users $recipientId
-     * @return Connections
+     * @param \AppBundle\Entity\User $recipientId
+     * @return Connection
      */
-    public function setRecipientId(\AppBundle\Entity\Users $recipientId = null)
+    public function setRecipientId(User $recipientId = null)
     {
         $this->recipient_id = $recipientId;
 
@@ -77,7 +83,7 @@ class Connections
     /**
      * Get recipient_id
      *
-     * @return \AppBundle\Entity\Users 
+     * @return \AppBundle\Entity\User
      */
     public function getRecipientId()
     {
