@@ -2,10 +2,11 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Card;
+use AppBundle\Entity\Connection;
 
 class CardController extends Controller
 {
@@ -38,7 +39,6 @@ class CardController extends Controller
             $card->setTwitter($request->get('twitter'));
             $card->setLogo($request->get('logo'));
 
-
             $em->persist($card);
             $em->flush();
             $newId = $card->getId();
@@ -47,5 +47,48 @@ class CardController extends Controller
         }
 
         return new Response('missing parameters');
+    }
+
+    public function shareAction(Request $request) {
+        $cardId = $request->get('id');
+        $receiverId = $request->get('userId');
+
+        $em = $this->getDoctrine()->getManager();
+        $card = $em->getRepository('AppBundle:Card')->findOneBy(array('id' => $cardId));
+        $cardOwnerId = $card->getUserId()->getId();
+
+        if (!$em->getRepository('AppBundle:Connection')->findOneBy(array('sender_id' => $cardOwnerId, 'recipient_id' => $receiverId))) {
+            $connection = new Connection();
+            $connection->setSenderId($em->getRepository('AppBundle:User')->findOneBy(array('id' => $cardOwnerId)));
+            $connection->setRecipientId($em->getRepository('AppBundle:User')->findOneBy(array('id' => $receiverId)));
+
+            $em->persist($connection);
+            $em->flush();
+
+            return new JsonResponse(array('created a connection', 200));
+        }
+
+        return new JsonResponse(array('connection already exists', 5));
+    }
+
+    public function getCardAction(Request $request) {
+        $cardId = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $card = $em->getRepository('AppBundle:Card')->findOneBy(array('id' => $cardId));
+
+        if ($card) {
+            return new JsonResponse($card);
+        }
+
+        return new JsonResponse('could not find card', 404);
+    }
+
+    public function getDeckAction(Request $request) {
+        $userId = $request->get('id');
+
+        $em = $this->getDoctrine()->getManager();
+        $cards = $em->getRepository('AppBundle:Connection')->findBy(array('recipient_id' => $userId));
+        
+        return new JsonResponse($cards);
     }
 }
