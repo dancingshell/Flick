@@ -10,6 +10,18 @@ user_create:
 user_get:
     path: /user/{id}
     defaults: { _controller: AppBundle:User:get }
+user_login:
+    path: /user/login
+    defaults: { _controller: AppBundle:User:login }
 card_create:
     path: /card/create
     defaults: { _controller: AppBundle:Card:create }
+card_get:
+    path: /card/{id}
+    defaults: { _controller: AppBundle:Card:getCard }
+deck_get:
+    path: /deck/{id}
+    defaults: { _controller: AppBundle:Card:getDeck }
+card_share:
+    path: /card/{id}/user/{userId}
+    defaults: { _controller: AppBundle:Card:share }
