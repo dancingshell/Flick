@@ -8,12 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
-    protected $em;
-
-    public function __construct()
-    {
-        $this->em = $this->getDoctrine()->getManager();
-    }
 
     public function createAction(Request $request)
     {
@@ -31,8 +25,9 @@ class UserController extends Controller
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
-                $this->em->persist($user);
-                $this->em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
                 return new JsonResponse(array('created a user', 200));
             }
 
