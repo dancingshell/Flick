@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Card;
 use AppBundle\Entity\Connection;
 
@@ -43,13 +42,14 @@ class CardController extends Controller
             $em->flush();
             $newId = $card->getId();
 
-            return new Response('created a card with id: ' . $newId);
+            return new JsonResponse(array('created a card with id: ' . $newId, 200));
         }
 
-        return new Response('missing parameters');
+        return new JsonResponse(array('missing parameters: ', 403));
     }
 
-    public function shareAction(Request $request) {
+    public function shareAction(Request $request)
+    {
         $cardId = $request->get('id');
         $receiverId = $request->get('userId');
 
@@ -68,10 +68,11 @@ class CardController extends Controller
             return new JsonResponse(array('created a connection', 200));
         }
 
-        return new JsonResponse(array('connection already exists', 5));
+        return new JsonResponse(array('connection already exists', 406));
     }
 
-    public function getCardAction(Request $request) {
+    public function getCardAction(Request $request)
+    {
         $cardId = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $card = $em->getRepository('AppBundle:Card')->findOneBy(array('id' => $cardId));
@@ -83,12 +84,13 @@ class CardController extends Controller
         return new JsonResponse('could not find card', 404);
     }
 
-    public function getDeckAction(Request $request) {
+    public function getDeckAction(Request $request)
+    {
         $userId = $request->get('id');
 
         $em = $this->getDoctrine()->getManager();
         $cards = $em->getRepository('AppBundle:Connection')->findBy(array('recipient_id' => $userId));
-        
-        return new JsonResponse($cards);
+
+        return new JsonResponse(array($cards, 200));
     }
 }

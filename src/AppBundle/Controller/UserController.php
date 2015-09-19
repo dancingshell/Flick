@@ -5,11 +5,18 @@ use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function createAction(Request $request) {
+    protected $em;
+
+    public function __construct()
+    {
+        $this->em = $this->getDoctrine()->getManager();
+    }
+
+    public function createAction(Request $request)
+    {
         //get parameters
         $email = $request->get('email');
         $password = $request->get('password');
@@ -24,29 +31,46 @@ class UserController extends Controller
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-                return new Response('created a user');
+                $this->em->persist($user);
+                $this->em->flush();
+                return new JsonResponse(array('created a user', 200));
             }
 
-            return new Response('email exists');
+            return new JsonResponse(array('email exists', 406));
         }
 
-        return new Response('missing parameters');
+        return new JsonResponse(array('missing parameters', 403));
     }
 
-    public function getAction($id) {
+    public function loginAction(Request $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        /**
+         * @var $user User
+         */
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['email' => $email]);
+
+        if (!password_hash($password, PASSWORD_DEFAULT) == $user->getPassword() || !$user) {
+            return new JsonResponse(array('incorrect parameters', 404));
+        }
+
+        return new JsonResponse(array('logged in user ' . $user->getId(), 200));
+    }
+
+    public function getAction($id)
+    {
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException(
-                'No product found for id '.$id
+                'No product found for id '. $id
             );
         }
 
-        return new JsonResponse($user);
+        return new JsonResponse(array($user, 200));
     }
 }

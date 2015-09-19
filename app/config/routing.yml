@@ -10,6 +10,9 @@ user_create:
 user_get:
     path: /user/{id}
     defaults: { _controller: AppBundle:User:get }
+user_login:
+    path: /user/login
+    defaults: { _controller: AppBundle:User:login }
 card_create:
     path: /card/create
     defaults: { _controller: AppBundle:Card:create }
