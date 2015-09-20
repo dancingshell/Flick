@@ -142,7 +142,7 @@ class User implements \JsonSerializable
         return [
             'email' => $this->getEmail(),
             'firstName' => $this->getFirstName(),
-            'lastName' => $this->getLastName()
+            'lastName' => $this->getLastName(),
         ];
     }
 }

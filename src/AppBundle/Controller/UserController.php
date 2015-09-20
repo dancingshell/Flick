@@ -28,7 +28,7 @@ class UserController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-                return new JsonResponse(array('created a user', 200));
+                return new JsonResponse(array('created a user with password ' . password_hash($password, PASSWORD_DEFAULT) , 200));
             }
 
             return new JsonResponse(array('email exists', 406));
@@ -47,7 +47,7 @@ class UserController extends Controller
          */
         $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(['email' => $email]);
 
-        if (!password_hash($password, PASSWORD_DEFAULT) == $user->getPassword() || !$user) {
+        if (!$user || !password_verify($password, $user->getPassword())) {
             return new JsonResponse(array('incorrect parameters', 404));
         }
 

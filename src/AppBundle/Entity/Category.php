@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="categories")
  */
-class Category
+class Category implements \JsonSerializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -22,7 +22,7 @@ class Category
     protected $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $type;
 
@@ -80,5 +80,14 @@ class Category
     public function getType()
     {
         return $this->type;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id'=> $this->getId(),
+            'name'=> $this->getName(),
+            'type' => $this->getType()
+        ];
     }
 }
